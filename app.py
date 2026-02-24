@@ -62,7 +62,7 @@ total_trilhas_a_criar = float('inf') if limite_input == 0 else int(limite_input)
 st.subheader("2. Arquivos de Áudio")
 
 # Caixa de instrução destacada
-st.info("📂 **Onde encontrar os arquivos:** Abra o Windows Explorer, vá para o caminho **`V:\\Arq Audio SF`** e arraste os áudios para a área abaixo.")
+st.info("📂 **Onde encontrar os arquivos:** Abra o Windows Explorer, vá para o caminho **`V:\\Arq Audio SF`**, abra a pasta da sala correspondete e arraste os áudios para a área abaixo.")
 
 uploaded_files = st.file_uploader("Faça o upload de TODOS os arquivos .ogg", type=['ogg'], accept_multiple_files=True)
 
@@ -234,6 +234,7 @@ if st.button("Processar Áudios", type="primary"):
         except Exception as e:
 
             st.error(f"Ocorreu um erro durante o processamento: {e}")
+
 
 
 
