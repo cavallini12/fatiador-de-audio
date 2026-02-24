@@ -34,7 +34,13 @@ st.subheader("1. Configurações")
 
 # Configura o fuso horário de Brasília (UTC-3)
 fuso_br = timezone(timedelta(hours=-3))
-agora_br = datetime.now(fuso_br)
+
+# O SEGREDO: Salvar a hora e data inicial na "memória" apenas no primeiro carregamento
+if "data_padrao" not in st.session_state:
+    st.session_state["data_padrao"] = datetime.now(fuso_br).date()
+if "hora_padrao" not in st.session_state:
+    # Retiramos os segundos/microssegundos para o campo ficar mais limpo
+    st.session_state["hora_padrao"] = datetime.now(fuso_br).replace(second=0, microsecond=0).time()
 
 col1, col2 = st.columns(2)
 
@@ -44,9 +50,9 @@ with col1:
     inicio_audio_sec = st.number_input("Tempo Início Áudio (segundos)", min_value=0, value=0, step=1)
 
 with col2:
-    # Usamos agora_br e adicionamos step=60 (passo de 60 segundos = 1 minuto)
-    data_obj = st.date_input("Data Inicial", value=agora_br.date())
-    hora_obj = st.time_input("Hora Inicial", value=agora_br.time(), step=60)
+    # Puxamos os valores da memória, em vez de recalcular o "now()" o tempo todo
+    data_obj = st.date_input("Data Inicial", value=st.session_state["data_padrao"])
+    hora_obj = st.time_input("Hora Inicial", value=st.session_state["hora_padrao"], step=60)
     limite_input = st.number_input("Máximo de Trilhas (0 = processar tudo)", min_value=0, value=0, step=1)
 
 data_hora_atual = datetime.combine(data_obj, hora_obj)
@@ -224,3 +230,4 @@ if st.button("Processar Áudios", type="primary"):
         except Exception as e:
 
             st.error(f"Ocorreu um erro durante o processamento: {e}")
+
