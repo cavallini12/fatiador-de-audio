@@ -5,7 +5,7 @@ from datetime import datetime, timedelta, timezone
 from pydub import AudioSegment
 
 # --- Configuração da Página ---
-st.set_page_config(page_title="Processador de Áudios", page_icon="✂️", layout="centered")
+st.set_page_config(page_title="Gerador backup de trilhas", page_icon="✂️", layout="centered")
 
 # --- Funções Auxiliares ---
 def parse_timestamp_from_filename(filename):
@@ -26,7 +26,7 @@ def gerar_nome_arquivo(com_formatado, trilha_formatada, data_hora):
     return f"{com_formatado}_{trilha_formatada}_{data_formatada}.mp3"
 
 # --- Interface Principal ---
-st.title("✂️ Processador e Fatiador de Áudios")
+st.title("✂️ Gerador backup de trilhas")
 st.markdown("Preencha os dados abaixo, envie os arquivos `.ogg` e aguarde a geração do arquivo ZIP.")
 
 # --- 1. Entradas do Usuário ---
@@ -230,4 +230,5 @@ if st.button("Processar Áudios", type="primary"):
         except Exception as e:
 
             st.error(f"Ocorreu um erro durante o processamento: {e}")
+
 
